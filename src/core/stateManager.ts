@@ -11,13 +11,13 @@ export default class StateManager {
     return this.currentState instanceof stateClass;
   }
 
-  runState() {
-    this.setCurrentState(this.currentState.next());
+  async runState() {
+    this.setCurrentState(await this.currentState.next());
   }
   
-  runUntilState(state: StateClass) {
+  async runUntilState(state: StateClass) {
     while (!this.isCurrentState(state)) {
-      this.runState();
+      await this.runState();
     }
   }
 }

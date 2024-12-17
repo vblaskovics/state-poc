@@ -4,7 +4,7 @@ import { State } from '../../types/state';
 import { createMockState, MockState } from '../test.utils';
 
 describe('StateManager', () => {
-  it('should execute states sequentially until the specified state is reached', () => {
+  it('should execute states sequentially until the specified state is reached', async () => {
     let sm = new StateManager();
     let counter = 0;
     let mockState1: State;
@@ -16,7 +16,7 @@ describe('StateManager', () => {
     mockState1 = createMockState(sm, {
       nextFn: () => {
         counter++;
-        return mockState2;
+        return Promise.resolve(mockState2);
       },
       stateClass: MockState,
     });
@@ -24,7 +24,7 @@ describe('StateManager', () => {
     mockState2 = createMockState(sm, {
       nextFn: () => {
         counter++;
-        return mockState3;
+        return Promise.resolve(mockState3);
       },
       stateClass: MockState2,
     });
@@ -32,13 +32,13 @@ describe('StateManager', () => {
     mockState3 = createMockState(sm, {
       nextFn: () => {
         counter++;
-        return mockState1;
+        return Promise.resolve(mockState1);
       },
       stateClass: MockState3,
     });
 
     sm.setCurrentState(mockState1);
-    sm.runUntilState(MockState3);
+    await sm.runUntilState(MockState3);
 
     expect(counter).toBe(2);
   });

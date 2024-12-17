@@ -1,21 +1,24 @@
 import StateManager from '../core/stateManager';
+import Matrix from '../math/matrix';
 import { State } from '../types/state';
 import { Terminal } from '../types/terminal';
 import { BaseState } from './_base.state';
-import ReadyState from './ready.state';
 
-export const START_STATE_INITIAL_MSG = 'MÁTRIX SZORZÓ';
-
-export default class StartState extends BaseState {
+export class Input2State extends BaseState {
   private terminal: Terminal;
+
+  matrix1:Matrix;
 
   constructor(manager: StateManager, terminal: Terminal) {
     super(manager);
     this.terminal = terminal;
   }
+
+  setMatrix1(matrix:Matrix){
+    this.matrix1 = matrix;
+  }
   
   async next(): Promise<State> {
-    this.terminal.displayText(START_STATE_INITIAL_MSG);
-    return new ReadyState(this.manager, this.terminal);
+    throw new Error('Method not implemented.');
   }
 }

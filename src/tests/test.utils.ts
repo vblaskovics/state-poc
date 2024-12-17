@@ -5,25 +5,29 @@ import { Terminal } from '../types/terminal';
 
 export class MockState extends BaseState {
   do(): void {}
-  next(): State {
-    return this;
+  next(): Promise<State> {
+    return Promise.resolve(this);
   }
 }
 
 type createMockStateOptions = {
-  nextFn?: () => State;
-  doFn?: State['do'];
+  nextFn?: () => Promise<State>;
   stateClass?: StateClass;
 };
 
 export function createMockState(sm: StateManager, options?: createMockStateOptions): State {
   const mockState = options?.stateClass ? new options.stateClass(sm) : new MockState(sm);
-  mockState.do = options?.doFn || mockState.do;
   mockState.next = options?.nextFn || mockState.next;
   return mockState;
 }
 
-export function createMockTerminal(answer: string = '', displayTextFn: Terminal['displayText'] = () => {}): Terminal {
+type createMockTerminalOptions = {
+  answer?:string,
+  displayTextFn?:Terminal['displayText']
+}
+export function createMockTerminal(options?:createMockTerminalOptions): Terminal {
+  const answer = options?.answer ?? "mock-answer";
+  const displayTextFn = options?.displayTextFn ?? (() => {});
   return {
     askQuestion: (_: string) => {
       return Promise.resolve(answer);

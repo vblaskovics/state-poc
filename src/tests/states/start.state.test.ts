@@ -7,7 +7,7 @@ import ReadyState from '../../states/ready.state';
 
 describe('StartState', () => {
   it('should write an initial message to the terminal', () => {
-    const mockTerminal: Terminal = createMockTerminal('answer', () => START_STATE_INITIAL_MSG);
+    const mockTerminal: Terminal = createMockTerminal();
     const spy = vi.spyOn(mockTerminal, 'displayText');
     const sm = new StateManager();
     const startState = new StartState(sm, mockTerminal);
@@ -18,11 +18,11 @@ describe('StartState', () => {
     expect(spy).toBeCalledWith(START_STATE_INITIAL_MSG);
   });
 
-  it('should move on to Ready state on next', () => {
+  it('should move on to Ready state on next', async () => {
     const sm = new StateManager();
     sm.setCurrentState(new StartState(sm, createMockTerminal()));
 
-    sm.runState();
+    await sm.runState();
 
     expect(sm.isCurrentState(ReadyState)).toBeTruthy();
   });

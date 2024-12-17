@@ -1,5 +1,5 @@
 export type State = {
-  next: () => State;
+  next: () => Promise<State>;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

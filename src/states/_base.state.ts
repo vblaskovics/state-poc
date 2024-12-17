@@ -6,5 +6,5 @@ export abstract class BaseState implements State {
   constructor(manager: StateManager) {
     this.manager = manager;
   }
-  abstract next(): State;
+  abstract next(): Promise<State>;
 }
