@@ -1,0 +1,22 @@
+{
+  "name": "state-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx vite-node src/app.ts",
+    "test": "npx vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "globals": "^15.13.0",
+    "typescript-eslint": "^8.18.1",
+    "vite": "^5.4.11",
+    "vite-node": "^2.1.8",
+    "vitest": "^2.1.8"
+  }
+}
