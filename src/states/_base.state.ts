@@ -1,9 +1,9 @@
-import StateManager from '../core/stateManager';
+import AppManager from '../core/appManager';
 import { State } from '../types/state';
 
 export abstract class BaseState implements State {
-  protected manager: StateManager;
-  constructor(manager: StateManager) {
+  protected manager: AppManager;
+  constructor(manager: AppManager) {
     this.manager = manager;
   }
   abstract next(): Promise<State>;

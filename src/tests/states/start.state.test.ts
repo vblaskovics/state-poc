@@ -1,29 +1,29 @@
 import { describe, expect, it, vi } from 'vitest';
-import StateManager from '../../core/stateManager';
+import AppManager from '../../core/appManager';
 import { Terminal } from '../../types/terminal';
 import { createMockTerminal } from '../test.utils';
-import StartState, { START_STATE_INITIAL_MSG } from '../../states/start.state';
-import ReadyState from '../../states/ready.state';
+import { StartState, START_STATE_INITIAL_MSG } from '../../states/start.state';
+import { ReadyState } from '../../states/ready.state';
 
 describe('StartState', () => {
   it('should write an initial message to the terminal', () => {
     const mockTerminal: Terminal = createMockTerminal();
     const spy = vi.spyOn(mockTerminal, 'displayText');
-    const sm = new StateManager();
-    const startState = new StartState(sm, mockTerminal);
-    sm.setCurrentState(startState);
+    const am = new AppManager(mockTerminal);
+    const startState = new StartState(am);
+    am.setCurrentState(startState);
 
-    sm.runState();
+    am.runState();
 
     expect(spy).toBeCalledWith(START_STATE_INITIAL_MSG);
   });
 
   it('should move on to Ready state on next', async () => {
-    const sm = new StateManager();
-    sm.setCurrentState(new StartState(sm, createMockTerminal()));
+    const am = new AppManager(createMockTerminal());
+    am.setCurrentState(new StartState(am));
 
-    await sm.runState();
+    await am.runState();
 
-    expect(sm.isCurrentState(ReadyState)).toBeTruthy();
+    expect(am.isCurrentState(ReadyState)).toBeTruthy();
   });
 });

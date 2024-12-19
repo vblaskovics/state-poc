@@ -1,4 +1,5 @@
-import StateManager from '../core/stateManager';
+import AppManager from '../core/appManager';
+import Matrix from '../math/matrix';
 import { BaseState } from '../states/_base.state';
 import { State, StateClass } from '../types/state';
 import { Terminal } from '../types/terminal';
@@ -15,18 +16,18 @@ type createMockStateOptions = {
   stateClass?: StateClass;
 };
 
-export function createMockState(sm: StateManager, options?: createMockStateOptions): State {
+export function createMockState(sm: AppManager, options?: createMockStateOptions): State {
   const mockState = options?.stateClass ? new options.stateClass(sm) : new MockState(sm);
   mockState.next = options?.nextFn || mockState.next;
   return mockState;
 }
 
 type createMockTerminalOptions = {
-  answer?:string,
-  displayTextFn?:Terminal['displayText']
-}
-export function createMockTerminal(options?:createMockTerminalOptions): Terminal {
-  const answer = options?.answer ?? "mock-answer";
+  answer?: string;
+  displayTextFn?: Terminal['displayText'];
+};
+export function createMockTerminal(options?: createMockTerminalOptions): Terminal {
+  const answer = options?.answer ?? 'mock-answer';
   const displayTextFn = options?.displayTextFn ?? (() => {});
   return {
     askQuestion: (_: string) => {
@@ -34,4 +35,11 @@ export function createMockTerminal(options?:createMockTerminalOptions): Terminal
     },
     displayText: displayTextFn,
   };
+}
+
+export function createMockMatrix(): Matrix {
+  return new Matrix([
+    [0, 0],
+    [0, 0],
+  ]);
 }

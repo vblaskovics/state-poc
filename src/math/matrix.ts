@@ -37,6 +37,10 @@ export default class Matrix {
 
     return new Matrix(result);
   }
+
+  toString(): string {
+    return this.values.map(row => row.join(',')).join('\n');
+  }
 }
 
 

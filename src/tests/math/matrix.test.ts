@@ -99,4 +99,18 @@ describe('createMatrixFromText', () => {
     // non-numeric values
     expect(() => createMatrixFromText('1,2;a,b')).toThrowError('Invalid matrix format');
   });
+
+  it('should correctly convert a matrix to a string', () => {
+    const matrix1 = createMatrixFromText('1,2;3,4');
+    expect(matrix1.toString()).toBe('1,2\n3,4');
+
+    const matrix2 = createMatrixFromText('1,2,3;4,5,6');
+    expect(matrix2.toString()).toBe('1,2,3\n4,5,6');
+
+    const matrix3 = createMatrixFromText('1,2,3;4,5,6;7,8,9');
+    expect(matrix3.toString()).toBe('1,2,3\n4,5,6\n7,8,9');
+
+    const matrix4 = createMatrixFromText('5,10,15,20;25,30,35,40');
+    expect(matrix4.toString()).toBe('5,10,15,20\n25,30,35,40');
+  });
 });

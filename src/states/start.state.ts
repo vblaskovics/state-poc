@@ -1,21 +1,21 @@
-import StateManager from '../core/stateManager';
+import AppManager from '../core/appManager';
 import { State } from '../types/state';
 import { Terminal } from '../types/terminal';
 import { BaseState } from './_base.state';
-import ReadyState from './ready.state';
+import { ReadyState } from './ready.state';
 
 export const START_STATE_INITIAL_MSG = 'MÁTRIX SZORZÓ';
 
-export default class StartState extends BaseState {
+export class StartState extends BaseState {
   private terminal: Terminal;
 
-  constructor(manager: StateManager, terminal: Terminal) {
+  constructor(manager: AppManager) {
     super(manager);
-    this.terminal = terminal;
+    this.terminal = manager.getTerminal();
   }
   
   async next(): Promise<State> {
     this.terminal.displayText(START_STATE_INITIAL_MSG);
-    return new ReadyState(this.manager, this.terminal);
+    return new ReadyState(this.manager);
   }
 }
